@@ -1,2 +1,3 @@
 
+*.properties
 voca_refactor/src/main/resources/application.properties

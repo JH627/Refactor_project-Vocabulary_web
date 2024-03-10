@@ -4,16 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
+@Entity
 public class Word {
 
     @Id
@@ -23,12 +20,8 @@ public class Word {
     private String spelling;
     private String mean;
 
-    public Word(String spelling, String mean) {
+    public void updateWord(String spelling, String mean) {
         this.spelling = spelling;
         this.mean = mean;
-    }
-
-    public Word(Integer wordId) {
-        this.wordId = wordId;
     }
 }

@@ -1,4 +1,4 @@
-package com.voca_refactor.web.member.util.response;
+package com.voca_refactor.web.util.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
  */
 @Getter
 @RequiredArgsConstructor
-public class PagingResponse<T> extends CommonResponse{
+public class PagingResponse<T> extends CommonResponse {
 
     private Page<T> data;
 

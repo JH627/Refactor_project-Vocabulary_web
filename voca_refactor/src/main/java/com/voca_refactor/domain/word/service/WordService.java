@@ -1,16 +1,19 @@
 package com.voca_refactor.domain.word.service;
 
 import com.voca_refactor.domain.word.domain.Word;
+import com.voca_refactor.domain.word.dto.AddWordDto;
+import com.voca_refactor.domain.word.dto.DeleteWordDto;
+import com.voca_refactor.domain.word.dto.EditWordDto;
 import com.voca_refactor.domain.word.repository.WordRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class WordService {
     private final WordRepository wordRepository;
     public Page<Word> findAllByCond(String searchCond, Pageable pageable) {
@@ -21,19 +24,19 @@ public class WordService {
         return wordRepository.findAll(pageable);
     }
 
-    public Word save(Word word) {
-        Word savedWord = wordRepository.save(word);
-        return savedWord;
+    public Word save(AddWordDto word) {
+        return wordRepository.save(word.toEntity());
     }
 
-    public Word update(Word word) {
-        Word findWord = wordRepository.findById(word.getWordId()).orElse(null);
-        findWord.setSpelling(word.getSpelling());
-        findWord.setMean(word.getMean());
+    public Word update(EditWordDto form) {
+        Word findWord = wordRepository.findById(form.getWordId()).orElse(null);
+        if (findWord != null) {
+            findWord.updateWord(form.getSpelling(), form.getMean());
+        }
         return findWord;
     }
 
-    public void delete(Word word) {
-        wordRepository.delete(word);
+    public void delete(DeleteWordDto form) {
+        wordRepository.delete(form.toEntity());
     }
 }

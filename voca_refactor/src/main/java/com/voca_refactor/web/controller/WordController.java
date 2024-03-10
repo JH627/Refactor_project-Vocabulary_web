@@ -1,11 +1,14 @@
-package com.voca_refactor.web.word.controller;
+package com.voca_refactor.web.controller;
 
 import com.voca_refactor.domain.word.domain.Word;
+import com.voca_refactor.domain.word.dto.AddWordDto;
+import com.voca_refactor.domain.word.dto.DeleteWordDto;
+import com.voca_refactor.domain.word.dto.EditWordDto;
 import com.voca_refactor.domain.word.service.WordService;
-import com.voca_refactor.web.member.util.response.CommonResponse;
-import com.voca_refactor.web.member.util.response.PagingResponse;
-import com.voca_refactor.web.member.util.response.SingleResponse;
-import lombok.AllArgsConstructor;
+import com.voca_refactor.web.util.response.CommonResponse;
+import com.voca_refactor.web.util.response.PagingResponse;
+import com.voca_refactor.web.util.response.SingleResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.voca_refactor.web.word.dto.WordInfoDto.*;
 
 /**
  * todo PageableDefault 예외 처리
@@ -22,7 +24,7 @@ import static com.voca_refactor.web.word.dto.WordInfoDto.*;
  */
 @Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/words")
 public class WordController {
 
@@ -38,24 +40,24 @@ public class WordController {
     }
 
     @PostMapping()
-    public ResponseEntity<SingleResponse<Word>> addWord(@RequestBody AddWordForm form) {
-        Word savedWord = wordService.save(new Word(form.getSpelling(), form.getMean()));
+    public ResponseEntity<SingleResponse<Word>> addWord(@RequestBody AddWordDto form) {
+        Word savedWord = wordService.save(form);
         return ResponseEntity.ok().body(
                 new SingleResponse<>(HttpStatus.ACCEPTED, "success!", savedWord)
         );
     }
 
     @PatchMapping()
-    public ResponseEntity<SingleResponse<Word>> editWord(@RequestBody EditWordForm form) {
-        Word updatedWord = wordService.update(new Word(form.getWordId(), form.getSpelling(), form.getMean()));
+    public ResponseEntity<SingleResponse<Word>> editWord(@RequestBody EditWordDto form) {
+        Word updatedWord = wordService.update(form);
         return ResponseEntity.ok().body(
                 new SingleResponse<>(HttpStatus.ACCEPTED, "success!", updatedWord)
         );
     }
 
     @DeleteMapping()
-    public ResponseEntity<CommonResponse> deleteWord(@RequestBody DeleteWordForm form) {
-        wordService.delete(new Word(form.getWordId()));
+    public ResponseEntity<CommonResponse> deleteWord(@RequestBody DeleteWordDto form) {
+        wordService.delete(form);
         return ResponseEntity.ok().body(
                 new CommonResponse(HttpStatus.ACCEPTED, "success!")
         );

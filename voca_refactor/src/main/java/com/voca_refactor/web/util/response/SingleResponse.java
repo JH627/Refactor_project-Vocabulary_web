@@ -1,4 +1,4 @@
-package com.voca_refactor.web.member.util.response;
+package com.voca_refactor.web.util.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

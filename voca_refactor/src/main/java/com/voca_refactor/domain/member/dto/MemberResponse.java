@@ -1,10 +1,11 @@
-package com.voca_refactor.web.member.dto;
+package com.voca_refactor.domain.member.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Data
+@Builder
 public class MemberResponse {
     private String nickname;
     private Integer level;

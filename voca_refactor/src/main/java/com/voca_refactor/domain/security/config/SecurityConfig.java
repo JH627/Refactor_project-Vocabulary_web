@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtTokenProvider providerService;
-    private final String[] allowedUrls = {"/main", "/auth"};
+    private final String[] allowedUrls = {"/main", "/auth", "/auth/new"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
